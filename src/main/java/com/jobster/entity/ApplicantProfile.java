@@ -11,14 +11,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -46,7 +44,7 @@ public class ApplicantProfile {
     private String email;
 
     @NotBlank(message = "phonenumber is required")
-    @Pattern(regexp = "^[0-9\\\\-\\\\+]{9,15}$", message = "enter a valid phonenumber")
+    @Pattern(regexp = "^(\\+91|91|0)?[6-9][0-9]{9}$", message = "enter a valid phonenumber")
     private String phoneNumber;
 
     @Size(max = 255)
@@ -61,18 +59,17 @@ public class ApplicantProfile {
     @CollectionTable(name = "applicant_skills",joinColumns = @JoinColumn(name="applicant_id"))
     @Column(name = "skill")
     @Size(min = 5, message = "atleast 5 skills are required")
-    @NotEmpty(message = "atleast 5 skills are required")
     private List<String> skills;
 
-    @NotNull(message = "resume is required")
-    @Lob
-    @Column(name = "resume_url",nullable = false)
-    private byte[] resume;
+    @NotBlank(message = "Resume file path is required")
+    @Column(name = "resume_path",nullable = false)
+    private String resumePath;
 
     @Size(max = 255)
     @Pattern(regexp = ".*\\.(jpg|jpeg|png)$", message = "image should be in jpg,jpeg,png format")
     @NotBlank(message = "profilepicture is required")
-    private String profilePic;
+    @Column(name = "profile_pic_path", nullable = false)
+    private String profilePicturePath;
 
     @Min(value = 0, message = "experience should not be negative")
     private int experience;
