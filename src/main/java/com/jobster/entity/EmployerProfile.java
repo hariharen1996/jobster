@@ -4,22 +4,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.persistence.CollectionTable;
+import com.jobster.converter.JsonConverter;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -64,15 +62,10 @@ public class EmployerProfile {
     @NotBlank(message = "employer profilepicture is required")
     private String employerProfilePic;
 
-    @ElementCollection
-    @CollectionTable(name = "company_techstack",joinColumns = @JoinColumn(name="employer_id"))
-    @MapKeyColumn(name = "category")
-    @Column(name = "company_techstacks")
-    @Size(min = 1,message = "minimum 1 techstack is required")
-    @NotEmpty(message = "minimum 1 techstack is required")
+    @Column(columnDefinition = "TEXT")
+    @Convert(converter = JsonConverter.class)
     private Map<String,List<String>> companyTechStack;
 
-    
     @Column(nullable = false,updatable = false)
     private LocalDateTime createdAt;
 
