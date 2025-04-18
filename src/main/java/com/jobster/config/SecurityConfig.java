@@ -58,7 +58,8 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/h2-console/**")
-                        .permitAll()
+                        .permitAll().requestMatchers("/api/applicants/**").hasAuthority("APPLICANT")
+                        .requestMatchers("/api/employer/**").hasAnyAuthority("EMPLOYER")
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
