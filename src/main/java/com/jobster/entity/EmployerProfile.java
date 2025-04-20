@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 public class EmployerProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotBlank(message = "employername is required")
     @Size(max = 200)

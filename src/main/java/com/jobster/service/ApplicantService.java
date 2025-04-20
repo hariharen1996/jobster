@@ -46,7 +46,7 @@ public class ApplicantService {
         profile.setExperience(request.getExperience());
         profile.setUser(user);
 
-        if(profile.getId() == 0){
+        if(profile.getId() == null){
             profile.setCreatedAt(LocalDateTime.now());
         }
 

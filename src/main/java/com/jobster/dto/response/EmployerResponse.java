@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployerResponse {
-    private int id;
+    private Long id;
     private String employerName;
     private String companyName;
     private String companyLocation;

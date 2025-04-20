@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 public class ApplicantProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotBlank(message = "name is required")
     @Size(max = 100)
