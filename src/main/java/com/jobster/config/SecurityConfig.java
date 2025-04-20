@@ -2,6 +2,7 @@ package com.jobster.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -57,9 +58,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/h2-console/**")
-                        .permitAll().requestMatchers("/api/applicants/**").hasAuthority("APPLICANT")
-                        .requestMatchers("/api/employer/**").hasAnyAuthority("EMPLOYER")
+                        .requestMatchers("/api/auth/**", "/h2-console/**").permitAll()
+                        .requestMatchers("/api/applicants/**").hasAuthority("APPLICANT")
+                        .requestMatchers("/api/employer/**").hasAuthority("EMPLOYER")
+                        .requestMatchers(HttpMethod.GET,"/api/jobs/**").hasAnyAuthority("APPLICANT","EMPLOYER")
+                        .requestMatchers("/api/jobs/**").hasAuthority("EMPLOYER")
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
