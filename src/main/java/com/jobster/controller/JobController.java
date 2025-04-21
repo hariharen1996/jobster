@@ -46,4 +46,10 @@ public class JobController {
         List<JobResponse> jobResponses = jobService.getAllJobs();
         return ResponseEntity.ok(jobResponses);
     }
+
+    
+    @GetMapping("/employer")
+    public ResponseEntity<List<JobResponse>> getJobsByEmployer(){
+        return ResponseEntity.ok(jobService.getJobsByEmployer());
+    }
 }

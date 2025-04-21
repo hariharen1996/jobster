@@ -79,7 +79,12 @@ public class JobService {
         List<Job> jobs = jobRepository.findAll();
         return jobs.stream().map(this::addResponse).collect(Collectors.toList());
     }
-    
+
+    public List<JobResponse> getJobsByEmployer(){
+        EmployerProfile employer = getCurrentEmployer();
+        List<Job> jobs = jobRepository.findByEmployerProfile(employer);
+        return jobs.stream().map(this::addResponse).collect(Collectors.toList());
+    }
 
     public JobResponse addResponse(Job job) {
         EmployerResponse employerResponse = employerService.addResponse(job.getEmployerProfile());
